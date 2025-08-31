@@ -8,7 +8,7 @@ This lab guides you through creating intelligent AI agents from data exploration
 
 ## Prerequisites
 
-- Databricks workspace access
+- Databricks workspace access and compute (Serverless or Classic)
 - Basic Python knowledge
 
 ## Lab Structure
