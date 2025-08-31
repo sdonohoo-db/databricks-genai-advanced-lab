@@ -1,0 +1,26 @@
+OrderType,OrderID,OrderLineID,StockItemID,Quantity,InventoryImpactDate,ExpectedQuantityOnHand,StockItemName,Stock_SupplierID,Stock_LeadTimeDays
+ON-HAND,,,184,38,2016-05-31,38,Shipping carton (Brown) 305x305x305mm,7,14
+ON-HAND,,,193,50,2016-05-31,50,Pop Tarts,7,14
+SALES,73588,231181,193,-72,2016-06-01,-22,Pop Tarts,7,14
+ON-HAND,,,204,24,2016-05-31,24,SoundWave Pro X5,7,20
+SALES,73587,231170,204,-80,2016-06-01,-56,SoundWave Pro X5,7,20
+SALES,73592,231267,204,-90,2016-06-01,-170,SoundWave Pro X5,7,20
+ON-HAND,,,77,27,2016-05-31,27,White Eggs,4,7
+SALES,73588,231178,77,-108,2016-06-01,-81,White Eggs,4,7
+SALES,73590,231227,77,-36,2016-06-01,-144,White Eggs,4,7
+SALES,73593,231346,77,-72,2016-06-01,-108,White Eggs,4,7
+PURCHASE,2073,8359,77,3401,2016-06-20,3329,White Eggs,4,7
+ON-HAND,,,78,16,2016-05-31,16,Organic Eggs,4,7
+SALES,73589,231206,78,-96,2016-06-01,-80,Organic Eggs,4,7
+SALES,73594,231357,78,-84,2016-06-01,-180,Organic Eggs,4,7
+PURCHASE,2073,8360,78,3667,2016-06-20,3583,Organic Eggs,4,7
+ON-HAND,,,80,20,2016-05-31,20,Brown Eggs,4,7
+SALES,73595,231360,80,-120,2016-06-01,-100,Brown Eggs,4,7
+PURCHASE,2073,8361,80,1831,2016-06-20,1711,Brown Eggs,4,7
+ON-HAND,,,86,3,2016-05-31,3,"\"\"\"The Gu\"\" red shirt XML tag t-shirt (White) 5XL\"",4,7
+PURCHASE,2073,8362,86,3768,2016-06-20,3771,"\"\"\"The Gu\"\" red shirt XML tag t-shirt (White) 5XL\"",4,7
+ON-HAND,,,95,48,2016-05-31,48,"\"\"\"The Gu\"\" red shirt XML tag t-shirt (Black) XL\"",4,7
+PURCHASE,2073,8363,95,1827,2016-06-20,1875,"\"\"\"The Gu\"\" red shirt XML tag t-shirt (Black) XL\"",4,7
+ON-HAND,,,98,25,2016-05-31,25,Free Range Eggs,4,7
+SALES,73591,231265,98,-48,2016-06-01,-23,Free Range Eggs,4,7
+PURCHASE,2073,8364,98,3717,2016-06-20,3669,Free Range Eggs,4,7
