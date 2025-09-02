@@ -1,15 +1,13 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Mosaic AI Agent Framework: Author and deploy a tool-calling LangGraph agent
+# MAGIC # Mosaic AI Agent Framework: Evaluate and deploy a tool-calling LangGraph agent
 # MAGIC
-# MAGIC This notebook shows how to author an LangGraph agent and wrap it using the [`ResponsesAgent`](https://mlflow.org/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) interface to make it compatible with Mosaic AI. In this notebook you learn to:
+# MAGIC In this notebook you learn to:
 # MAGIC
-# MAGIC - Author a tool-calling LangGraph agent wrapped with `ResponsesAgent`
-# MAGIC - Manually test the agent's output
 # MAGIC - Evaluate the agent using Mosaic AI Agent Evaluation
 # MAGIC - Log and deploy the agent
 # MAGIC
-# MAGIC To learn more about authoring an agent using Mosaic AI Agent Framework, see Databricks documentation ([AWS](https://docs.databricks.com/aws/generative-ai/agent-framework/author-agent) | [Azure](https://learn.microsoft.com/azure/databricks/generative-ai/agent-framework/create-chat-model)).
+# MAGIC To learn more about evaluating an agent using MLflow, see Databricks documentation ([Azure](https://learn.microsoft.com/en-us/azure/databricks/mlflow3/genai/eval-monitor/evaluate-app)).
 # MAGIC
 
 # COMMAND ----------
@@ -113,10 +111,10 @@ with mlflow.start_run():
 # MAGIC ## Evaluate the agent with Agent Evaluation
 # MAGIC
 # MAGIC Use Mosaic AI Agent Evaluation to evalaute the agent's responses based on expected responses and other evaluation criteria. Use the evaluation criteria you specify to guide iterations, using MLflow to track the computed quality metrics.
-# MAGIC See Databricks documentation ([AWS]((https://docs.databricks.com/aws/generative-ai/agent-evaluation) | [Azure](https://learn.microsoft.com/azure/databricks/generative-ai/agent-evaluation/)).
+# MAGIC See Databricks documentation ([AWS]((https://docs.databricks.com/aws/generative-ai/agent-evaluation) | [Azure](https://learn.microsoft.com/en-us/azure/databricks/mlflow3/genai/eval-monitor/evaluate-app)).
 # MAGIC
 # MAGIC
-# MAGIC To evaluate your tool calls, add custom metrics. See Databricks documentation ([AWS](https://docs.databricks.com/en/generative-ai/agent-evaluation/custom-metrics.html#evaluating-tool-calls) | [Azure](https://learn.microsoft.com/en-us/azure/databricks/generative-ai/agent-evaluation/custom-metrics#evaluating-tool-calls)).
+# MAGIC To evaluate your tool calls, add custom metrics. See Databricks documentation ([AWS](https://docs.databricks.com/en/generative-ai/agent-evaluation/custom-metrics.html#evaluating-tool-calls) | [Azure](https://learn.microsoft.com/en-us/azure/databricks/mlflow3/genai/eval-monitor/custom-judge/)).
 
 # COMMAND ----------
 
