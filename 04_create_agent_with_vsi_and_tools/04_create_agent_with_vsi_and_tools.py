@@ -1,13 +1,11 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Mosaic AI Agent Framework: Author and deploy a tool-calling LangGraph agent
+# MAGIC # Mosaic AI Agent Framework: Author a tool-calling LangGraph agent
 # MAGIC
 # MAGIC This notebook shows how to author an LangGraph agent and wrap it using the [`ResponsesAgent`](https://mlflow.org/docs/latest/api_reference/python_api/mlflow.pyfunc.html#mlflow.pyfunc.ResponsesAgent) interface to make it compatible with Mosaic AI. In this notebook you learn to:
 # MAGIC
 # MAGIC - Author a tool-calling LangGraph agent wrapped with `ResponsesAgent`
 # MAGIC - Manually test the agent's output
-# MAGIC - Evaluate the agent using Mosaic AI Agent Evaluation
-# MAGIC - Log and deploy the agent
 # MAGIC
 # MAGIC To learn more about authoring an agent using Mosaic AI Agent Framework, see Databricks documentation ([AWS](https://docs.databricks.com/aws/generative-ai/agent-framework/author-agent) | [Azure](https://learn.microsoft.com/azure/databricks/generative-ai/agent-framework/create-chat-model)).
 
