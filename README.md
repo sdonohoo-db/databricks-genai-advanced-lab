@@ -2,13 +2,15 @@
 
 A practical 2-day hands-on workshop for building enterprise-level AI agents using Databricks platform capabilities.
 
-## Overview
+## Key Learning Outcomes
 
-This lab guides you through creating intelligent AI agents from data exploration to production deployment, covering vector search, function calling, evaluation, monitoring, and user interfaces.
+- **Build Agent Systems**: Create single-agent and multi-agent architectures with vector search, function calling, and tool integration
+- **Master LLMOps Pipeline**: Implement the complete lifecycle from development to production including evaluation, monitoring, deployment, and Databricks Apps for front-end applications  
+- **Compare Agent Approaches**: Hands-on experience with different architectures (single-agent vs multi-agent vs MCP), prompt optimization, and quick deployment approaches like Agent Bricks and Genie spaces
 
 ## Prerequisites
 
-- Databricks workspace access
+- Databricks workspace access and compute (Serverless or Classic)
 - Basic Python knowledge
 
 ## Lab Structure
@@ -44,12 +46,6 @@ This lab guides you through creating intelligent AI agents from data exploration
 - `11_create_agent_with_mcp/` - Model Control Protocol integration
 - `12_create_agent_bricks (UI)/` - Agent Bricks UI components
 - `13_prompt_optimization/` - Advanced prompt engineering techniques
-
-## Key Learning Outcomes
-
-- **Build Agent Systems**: Create single-agent and multi-agent architectures with vector search, function calling, and tool integration
-- **Master LLMOps Pipeline**: Implement the complete lifecycle from development to production including evaluation, monitoring, deployment, and Databricks Apps for front-end applications  
-- **Compare Agent Approaches**: Hands-on experience with different architectures (single-agent vs multi-agent vs MCP), prompt optimization, and quick deployment approaches like Agent Bricks and Genie spaces
 
 ## Data
 

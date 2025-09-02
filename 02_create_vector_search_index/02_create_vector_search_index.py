@@ -116,11 +116,11 @@ print(f"Endpoint named {VECTOR_SEARCH_ENDPOINT_NAME} is ready.")
 # MAGIC
 
 # COMMAND ----------
-
-# Before inserting indexes, we need to enable CDC. 
-# %sql
-# ALTER TABLE databricks_workshop.jywu.product_docs 
-# SET TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true')
+ 
+# MAGIC %sql
+# MAGIC -- Before inserting indexes, we need to enable CDC. 
+# MAGIC ALTER TABLE databricks_workshop.jywu.product_docs 
+# MAGICSET TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true')
 
 # COMMAND ----------
 
