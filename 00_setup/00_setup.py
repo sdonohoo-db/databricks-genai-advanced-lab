@@ -115,10 +115,11 @@ display(dbutils.fs.ls(f"/Volumes/{catalog_name}/{schema_name}/pdfs"))
 # update code from jywu to specified schema_name
 import os
 root = os.getcwd().rsplit("/", 1)[0] + '/'
+current_file = os.getcwd().rsplit("/", 1)[-1]
 
 for dirpath, _, filenames in os.walk(root):
     for filename in filenames:
-        if filename.endswith((".py", ".ipynb")):
+        if filename.endswith((".py", ".ipynb")) and not filename.startswith(current_file):
             filepath = os.path.join(dirpath, filename)
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
