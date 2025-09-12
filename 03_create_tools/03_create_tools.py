@@ -6,9 +6,29 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install -qqqq -U -r requirements.txt
+# MAGIC %pip install -U -qqqq unitycatalog-langchain[databricks]
 # MAGIC # Restart to load the packages into the Python environment
 # MAGIC dbutils.library.restartPython()
+
+# COMMAND ----------
+
+import pkg_resources
+
+# List of packages to check
+packages_to_check = [
+    "unitycatalog-langchain"
+]
+
+# Get installed packages and their versions
+installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+
+# Check and print the version of specified packages
+for package_name in packages_to_check:
+    version = installed_packages.get(package_name)
+    if version:
+        print(f"{package_name}: {version}")
+    else:
+        print(f"{package_name} is not installed.")
 
 # COMMAND ----------
 
@@ -41,27 +61,28 @@ spark.sql(f"USE SCHEMA  `{schema_name}`")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT * FROM databricks_workshop.jywu.customer_services 
-# MAGIC LIMIT 5
+spark.sql(f"""
+          SELECT * FROM {catalog_name}.{schema_name}.customer_services LIMIT 5
+          """).display()
 
 # COMMAND ----------
 
 # DBTITLE 1,Create a function registered to Unity Catalog
-# MAGIC %sql
-# MAGIC CREATE OR REPLACE FUNCTION get_latest_return()
-# MAGIC RETURNS TABLE(purchase_date DATE, issue_category STRING, issue_description STRING, name STRING)
-# MAGIC COMMENT 'Returns the most recent customer service interaction, such as returns.'
-# MAGIC RETURN (
-# MAGIC   SELECT 
-# MAGIC     CAST(date_time AS DATE) AS purchase_date,
-# MAGIC     issue_category,
-# MAGIC     issue_description,
-# MAGIC     name
-# MAGIC   FROM databricks_workshop.jywu.customer_services
-# MAGIC   ORDER BY date_time DESC
-# MAGIC   LIMIT 1
-# MAGIC );
+spark.sql(f"""
+          CREATE OR REPLACE FUNCTION get_latest_return()
+          RETURNS TABLE(purchase_date DATE, issue_category STRING, issue_description STRING, name STRING)
+          COMMENT 'Returns the most recent customer service interaction, such as returns.'
+          RETURN (
+          SELECT
+          CAST(date_time AS DATE) AS purchase_date,
+          issue_category,
+          issue_description,
+          name
+          FROM {catalog_name}.{schema_name}.customer_services
+          ORDER BY date_time DESC
+          LIMIT 1
+          )
+          """)
 
 # COMMAND ----------
 
@@ -84,16 +105,17 @@ spark.sql(f"USE SCHEMA  `{schema_name}`")
 # COMMAND ----------
 
 # DBTITLE 1,Create function that retrieves order history based on userID
-# MAGIC %sql
-# MAGIC CREATE OR REPLACE FUNCTION get_order_history(user_name STRING)
-# MAGIC RETURNS TABLE (returns_last_12_months INT, issue_category STRING, todays_date DATE)
-# MAGIC COMMENT 'This takes the user_name of a customer as an input and returns the number of returns and the issue category'
-# MAGIC LANGUAGE SQL
-# MAGIC RETURN 
-# MAGIC SELECT count(*) as returns_last_12_months, issue_category, now() as todays_date
-# MAGIC FROM databricks_workshop.jywu.customer_services 
-# MAGIC WHERE name = user_name 
-# MAGIC GROUP BY issue_category;
+spark.sql(f"""
+          CREATE OR REPLACE FUNCTION get_order_history(user_name STRING)
+          RETURNS TABLE (returns_last_12_months INT, issue_category STRING, todays_date DATE)
+          COMMENT 'This takes the user_name of a customer as an input and returns the number of returns and the issue category'
+          LANGUAGE SQL
+          RETURN
+          SELECT count(*) as returns_last_12_months, issue_category, now() as todays_date
+          FROM {catalog_name}.{schema_name}.customer_services
+          WHERE name = user_name
+          GROUP BY issue_category
+          """)
 
 # COMMAND ----------
 
@@ -113,31 +135,32 @@ spark.sql(f"USE SCHEMA  `{schema_name}`")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT * FROM databricks_workshop.jywu.policies 
-# MAGIC LIMIT 5
+spark.sql(f"""
+          SELECT * FROM {catalog_name}.{schema_name}.policies LIMIT 5
+          """).display()
 
 # COMMAND ----------
 
 # DBTITLE 1,Create function to retrieve return policy
-# MAGIC %sql
-# MAGIC CREATE OR REPLACE FUNCTION get_return_policy()
-# MAGIC RETURNS TABLE (
-# MAGIC   policy           STRING,
-# MAGIC   policy_details   STRING,
-# MAGIC   last_updated     DATE
-# MAGIC )
-# MAGIC COMMENT 'Returns the details of the Return Policy'
-# MAGIC LANGUAGE SQL
-# MAGIC RETURN (
-# MAGIC   SELECT
-# MAGIC     policy,
-# MAGIC     policy_details,
-# MAGIC     last_updated
-# MAGIC   FROM databricks_workshop.jywu.policies
-# MAGIC   WHERE policy = 'Return Policy'
-# MAGIC   LIMIT 1
-# MAGIC );
+spark.sql(f"""
+          CREATE OR REPLACE FUNCTION get_return_policy()
+          RETURNS TABLE (
+            policy           STRING,
+            policy_details   STRING,
+            last_updated     DATE
+            )
+            COMMENT 'Returns the details of the Return Policy'
+            LANGUAGE SQL
+            RETURN (
+              SELECT
+              policy,
+              policy_details,
+              last_updated
+              FROM {catalog_name}.{schema_name}.policies
+              WHERE policy = 'Return Policy'
+              LIMIT 1
+              )
+          """)
 
 # COMMAND ----------
 

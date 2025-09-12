@@ -9,7 +9,14 @@
 
 # COMMAND ----------
 
-catalog_name = "databricks_workshop"
+# Create a widget to input the catalog name
+dbutils.widgets.text("catalog_name", "databricks_workshop", "Catalog Name")
+
+# Retrieve the catalog name from the widget
+catalog_name = dbutils.widgets.get("catalog_name")
+
+# COMMAND ----------
+
 spark.sql(f"USE CATALOG {catalog_name}")
 
 # COMMAND ----------
