@@ -11,6 +11,33 @@
 
 # COMMAND ----------
 
+# DBTITLE 1,Check the library versions. Modify to lock-in with the project version
+import pkg_resources
+
+# List of packages to check
+packages_to_check = [
+    "langchain", 
+    "langgraph", 
+    "databricks-langchain", 
+    "pydantic", 
+    "databricks-agents", 
+    "unitycatalog-langchain", 
+    "uv"
+]
+
+# Get installed packages and their versions
+installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+
+# Check and print the version of specified packages
+for package_name in packages_to_check:
+    version = installed_packages.get(package_name)
+    if version:
+        print(f"{package_name}: {version}")
+    else:
+        print(f"{package_name} is not installed.")
+
+# COMMAND ----------
+
 # MAGIC %run ../00_setup/config
 
 # COMMAND ----------
@@ -25,9 +52,9 @@ spark.sql(f"USE SCHEMA  `{schema_name}`")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT * FROM databricks_workshop.jywu.product_docs
-# MAGIC LIMIT 5
+spark.sql(f"""
+          SELECT * FROM {catalog_name}.{schema_name}.product_docs LIMIT 5
+          """).display()
 
 # COMMAND ----------
 
@@ -82,6 +109,10 @@ def wait_for_vs_endpoint_to_be_ready(vsc, vs_endpoint_name):
 
 # COMMAND ----------
 
+print(VECTOR_SEARCH_ENDPOINT_NAME)
+
+# COMMAND ----------
+
 from databricks.vector_search.client import VectorSearchClient
 vsc = VectorSearchClient(disable_notice=True)
 
@@ -116,11 +147,11 @@ print(f"Endpoint named {VECTOR_SEARCH_ENDPOINT_NAME} is ready.")
 # MAGIC
 
 # COMMAND ----------
- 
-# MAGIC %sql
-# MAGIC -- Before inserting indexes, we need to enable CDC. 
-# MAGIC ALTER TABLE databricks_workshop.jywu.product_docs 
-# MAGICSET TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true')
+
+# Before inserting indexes, we need to enable CDC. 
+spark.sql(f"""
+          ALTER TABLE {catalog_name}.{schema_name}.product_docs SET TBLPROPERTIES ('delta.enableChangeDataFeed' = 'true')
+          """)
 
 # COMMAND ----------
 
@@ -192,7 +223,7 @@ def wait_for_model_serving_endpoint_to_be_ready(ep_name):
 from databricks.sdk import WorkspaceClient
 
 #The table we'd like to index
-source_table_fullname = f"databricks_workshop.jywu.product_docs"
+source_table_fullname = f"{catalog_name}.{schema_name}.product_docs"
 # Where we want to store our index
 vs_index_fullname = f"{catalog_name}.{schema_name}.product_docs_index"
 

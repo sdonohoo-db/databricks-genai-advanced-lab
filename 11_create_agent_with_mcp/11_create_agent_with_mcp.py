@@ -542,16 +542,19 @@ from mlflow.models.resources import (
   DatabricksApp
 )
 
+CATALOG_NAME = "databricks_workshop"
+SCHEMA_NAME = "jywu"
+
 resources = [
     DatabricksServingEndpoint(endpoint_name=LLM_ENDPOINT_NAME), 
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_latest_return"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_order_history"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_return_policy"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_todays_date"),
-    DatabricksVectorSearchIndex(index_name="databricks_workshop.jywu.product_docs_index"),
-    DatabricksTable(table_name="databricks_workshop.jywu.customer_services"),
-    DatabricksTable(table_name="databricks_workshop.jywu.policies"),
-    DatabricksTable(table_name="databricks_workshop.jywu.inventories"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_latest_return"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_order_history"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_return_policy"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_todays_date"),
+    DatabricksVectorSearchIndex(index_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.product_docs_index"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.customer_services"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.policies"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.inventories"),
     DatabricksGenieSpace(genie_space_id="01f083cab80e1b6b8a23b98b61d8975c"),
     DatabricksSQLWarehouse(warehouse_id="f33f0c83be7369d5")
 ]

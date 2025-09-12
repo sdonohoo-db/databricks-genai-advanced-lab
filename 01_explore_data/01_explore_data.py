@@ -20,21 +20,15 @@ spark.sql(f"USE SCHEMA  `{schema_name}`")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC -- we will use this table to create vector search indexes
-# MAGIC SELECT * FROM databricks_workshop.jywu.product_docs
-# MAGIC LIMIT 5
+# we will use this table to create vector search indexes
+spark.sql(f"SELECT * FROM {catalog_name}.{schema_name}.product_docs limit 5").display()
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC -- we will use this table create SQL functions
-# MAGIC SELECT * FROM databricks_workshop.jywu.customer_services
-# MAGIC LIMIT 5
+# we will use this table create SQL functions
+spark.sql(f"SELECT * FROM {catalog_name}.{schema_name}.customer_services limit 5").display()
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC -- we will use this table create SQL functions
-# MAGIC SELECT * FROM databricks_workshop.jywu.policies
-# MAGIC LIMIT 5
+# we will use this table create SQL functions
+spark.sql(f"SELECT * FROM {catalog_name}.{schema_name}.policies limit 5").display()

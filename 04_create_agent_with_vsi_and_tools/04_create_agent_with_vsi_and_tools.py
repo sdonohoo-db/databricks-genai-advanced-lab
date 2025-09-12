@@ -16,6 +16,31 @@
 
 # COMMAND ----------
 
+import pkg_resources
+
+# List of packages to check
+packages_to_check = [
+    "backoff",
+    "langgraph", 
+    "databricks-langchain", 
+    "databricks-agents", 
+    "mlflow-skinny", 
+    "uv"
+]
+
+# Get installed packages and their versions
+installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+
+# Check and print the version of specified packages
+for package_name in packages_to_check:
+    version = installed_packages.get(package_name)
+    if version:
+        print(f"{package_name}: {version}")
+    else:
+        print(f"{package_name} is not installed.")
+
+# COMMAND ----------
+
 import mlflow
 
 mlflow_version = mlflow.__version__
@@ -83,6 +108,8 @@ display(mlflow_version)
 # MAGIC ############################################
 # MAGIC # TODO: Replace with your model serving endpoint
 # MAGIC LLM_ENDPOINT_NAME = "databricks-claude-3-7-sonnet"
+# MAGIC CATALOG_NAME = "databricks_workshop"
+# MAGIC SCHEMA_NAME = "jywu"
 # MAGIC # LLM_ENDPOINT_NAME = "databricks-meta-llama-3-3-70b-instruct"
 # MAGIC llm = ChatDatabricks(endpoint=LLM_ENDPOINT_NAME)
 # MAGIC
@@ -104,10 +131,10 @@ display(mlflow_version)
 # MAGIC
 # MAGIC # TODO: Add additional tools
 # MAGIC UC_TOOL_NAMES = [
-# MAGIC     "databricks_workshop.jywu.get_latest_return",
-# MAGIC     "databricks_workshop.jywu.get_order_history",
-# MAGIC     "databricks_workshop.jywu.get_return_policy",
-# MAGIC     "databricks_workshop.jywu.get_todays_date",]
+# MAGIC     f"{CATALOG_NAME}.{SCHEMA_NAME}.get_latest_return",
+# MAGIC     f"{CATALOG_NAME}.{SCHEMA_NAME}.get_order_history",
+# MAGIC     f"{CATALOG_NAME}.{SCHEMA_NAME}.get_return_policy",
+# MAGIC     f"{CATALOG_NAME}.{SCHEMA_NAME}.get_todays_date",]
 # MAGIC # UC_TOOL_NAMES = ["system.ai.*"]
 # MAGIC # UC_TOOL_NAMES = ["system.ai.python_exec"]
 # MAGIC uc_toolkit = UCFunctionToolkit(function_names=UC_TOOL_NAMES)
@@ -124,7 +151,7 @@ display(mlflow_version)
 # MAGIC # Example:
 # MAGIC VECTOR_SEARCH_TOOLS.append(
 # MAGIC     VectorSearchRetrieverTool(
-# MAGIC         index_name="databricks_workshop.jywu.product_docs_index",
+# MAGIC         index_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.product_docs_index",
 # MAGIC         # TODO: specify index description for better agent tool selection
 # MAGIC         # tool_description=""
 # MAGIC     )

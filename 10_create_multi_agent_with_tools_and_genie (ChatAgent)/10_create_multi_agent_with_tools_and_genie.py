@@ -24,6 +24,30 @@
 
 # COMMAND ----------
 
+import pkg_resources
+
+# List of packages to check
+packages_to_check = [
+    "mlflow-skinny",
+    "langgraph",
+    "databricks-langchain",
+    "databricks-agents",
+    "uv"
+]
+
+# Get installed packages and their versions
+installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+
+# Check and print the version of specified packages
+for package_name in packages_to_check:
+    version = installed_packages.get(package_name)
+    if version:
+        print(f"{package_name}: {version}")
+    else:
+        print(f"{package_name} is not installed.")
+
+# COMMAND ----------
+
 # MAGIC %run ../00_setup/config
 
 # COMMAND ----------
@@ -380,17 +404,20 @@ from mlflow.models.resources import (
 )
 from pkg_resources import get_distribution
 
+CATALOG_NAME = "databricks_workshop"
+SCHEMA_NAME = "jywu"
+
 # TODO: Manually include underlying resources if needed. See the TODO in the markdown above for more information.
 resources = [
     DatabricksServingEndpoint(endpoint_name=LLM_ENDPOINT_NAME), 
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_latest_return"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_order_history"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_return_policy"),
-    DatabricksFunction(function_name="databricks_workshop.jywu.get_todays_date"),
-    DatabricksVectorSearchIndex(index_name="databricks_workshop.jywu.product_docs_index"),
-    DatabricksTable(table_name="databricks_workshop.jywu.customer_services"),
-    DatabricksTable(table_name="databricks_workshop.jywu.policies"),
-    DatabricksTable(table_name="databricks_workshop.jywu.inventories"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_latest_return"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_order_history"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_return_policy"),
+    DatabricksFunction(function_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.get_todays_date"),
+    DatabricksVectorSearchIndex(index_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.product_docs_index"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.customer_services"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.policies"),
+    DatabricksTable(table_name=f"{CATALOG_NAME}.{SCHEMA_NAME}.inventories"),
     DatabricksGenieSpace(genie_space_id=GENIE_SPACE_ID),
     DatabricksSQLWarehouse(warehouse_id="f33f0c83be7369d5")
 ]
