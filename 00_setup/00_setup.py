@@ -10,7 +10,7 @@
 # COMMAND ----------
 
 # Create a widget to input the catalog name
-dbutils.widgets.text("catalog_name", "users", "Catalog Name")
+dbutils.widgets.text("catalog_name", "databricks_workshop", "Catalog Name")
 
 # Retrieve the catalog name from the widget
 catalog_name = dbutils.widgets.get("catalog_name")
