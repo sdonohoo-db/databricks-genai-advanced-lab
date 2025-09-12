@@ -17,6 +17,31 @@
 
 # COMMAND ----------
 
+import pkg_resources
+
+# List of packages to check
+packages_to_check = [
+    "backoff",
+    "langgraph", 
+    "databricks-langchain", 
+    "databricks-agents", 
+    "mlflow-skinny", 
+    "uv"
+]
+
+# Get installed packages and their versions
+installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+
+# Check and print the version of specified packages
+for package_name in packages_to_check:
+    version = installed_packages.get(package_name)
+    if version:
+        print(f"{package_name}: {version}")
+    else:
+        print(f"{package_name} is not installed.")
+
+# COMMAND ----------
+
 # MAGIC %run ../00_setup/config
 
 # COMMAND ----------
@@ -249,5 +274,5 @@ from databricks import agents
 agents.deploy(
     UC_MODEL_NAME,
     uc_registered_model_info.version,
-    tags={"RemoveAfter": "2026-01-01"},
+    tags={"RemoveAfter": f"2026-01-01"},
 )

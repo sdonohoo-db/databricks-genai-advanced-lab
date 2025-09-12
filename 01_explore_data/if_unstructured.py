@@ -13,23 +13,10 @@
 query = f"""
 SELECT path
 FROM READ_FILES('/Volumes/{catalog_name}/{schema_name}/pdfs/', format => 'binaryFile')
-LIMIT 2
+limit 5
 """
 
-spark.sql(query).show(truncate=False)
-
-# COMMAND ----------
-
-dbutils.widgets.text("catalog_name", catalog_name)
-dbutils.widgets.text("schema_name", schema_name)
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC SELECT path
-# MAGIC FROM READ_FILES('/Volumes/' || :catalog_name || '/' || :schema_name || '/pdfs/', format => 'binaryFile')
-# MAGIC LIMIT 2
-# MAGIC
+spark.sql(query).display()
 
 # COMMAND ----------
 
@@ -44,49 +31,46 @@ dbutils.widgets.text("schema_name", schema_name)
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT path FROM READ_FILES('/Volumes/databricks_workshop/jywu/pdfs/', format => 'binaryFile') LIMIT 2
+spark.sql(f"""
+          SELECT ai_parse_document(content) AS parsed_document
+          FROM READ_FILES('/Volumes/{catalog_name}/{schema_name}/pdfs/', format => 'binaryFile') LIMIT 2
+          """).display()
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT ai_parse_document(content) AS parsed_document
-# MAGIC FROM READ_FILES('/Volumes/databricks_workshop/jywu/pdfs/', format => 'binaryFile') LIMIT 2
+spark.sql(f"""
+          WITH corpus AS (
+            SELECT
+                path,
+                ai_parse_document(content) AS parsed
+            FROM
+                READ_FILES('/Volumes/{catalog_name}/{schema_name}/pdfs/', format => 'binaryFile')
+            )
+            SELECT
+            path,
+            parsed:document:pages,
+            parsed:document:elements,
+            parsed:corrupted_data,
+            parsed:error_status,
+            parsed:metadata
+            FROM corpus
+          """).display()
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC WITH corpus AS (
-# MAGIC   SELECT
-# MAGIC     path,
-# MAGIC     ai_parse_document(content) AS parsed
-# MAGIC   FROM
-# MAGIC     READ_FILES('/Volumes/databricks_workshop/jywu/pdfs/', format => 'binaryFile')
-# MAGIC )
-# MAGIC SELECT
-# MAGIC   path,
-# MAGIC   parsed:document:pages,
-# MAGIC   parsed:document:elements,
-# MAGIC   parsed:corrupted_data,
-# MAGIC   parsed:error_status,
-# MAGIC   parsed:metadata
-# MAGIC FROM corpus;
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC WITH corpus AS (
-# MAGIC   SELECT
-# MAGIC     path,
-# MAGIC     ai_parse_document(content) AS parsed
-# MAGIC   FROM
-# MAGIC     READ_FILES('/Volumes/databricks_workshop/jywu/pdfs/', format => 'binaryFile')
-# MAGIC )
-# MAGIC SELECT 
-# MAGIC    path as doc_uri,
-# MAGIC    array_join(transform(parsed:document.pages::ARRAY<STRUCT<content:STRING>>, x -> x.content), '\n') AS content
-# MAGIC FROM corpus
-# MAGIC ;
+spark.sql(f"""
+          WITH corpus AS (
+            SELECT
+                path,
+                ai_parse_document(content) AS parsed
+            FROM
+                READ_FILES('/Volumes/{catalog_name}/{schema_name}/pdfs/', format => 'binaryFile')
+            )
+            SELECT 
+            path as doc_uri,
+            array_join(transform(parsed:document.pages::ARRAY<STRUCT<content:STRING>>, x -> x.content), '\n') AS content
+            FROM corpus
+          """).display()
 
 # COMMAND ----------
 
