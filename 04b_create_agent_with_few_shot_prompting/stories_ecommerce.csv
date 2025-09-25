@@ -1,0 +1,4 @@
+issue_id,description,acceptance_criteria
+SHOP-201,"As a customer, I want to search for products so that I can find what I need","User can enter search terms; Results display relevant products; Filters available for category and price; Search suggestions provided; Empty results show helpful message"
+SHOP-202,"As a customer, I want to add items to my shopping cart so that I can purchase them later","User can click add to cart; Item quantity can be specified; Cart icon shows item count; Cart persists across sessions; User can view cart contents"
+SHOP-203,"As a customer, I want to checkout and pay for my items so that I can complete my purchase","User can proceed to checkout; Shipping address can be entered; Payment method can be selected; Order summary displayed; Payment processed securely; Confirmation email sent"

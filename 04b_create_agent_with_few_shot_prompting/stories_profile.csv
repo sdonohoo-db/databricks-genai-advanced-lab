@@ -1,0 +1,3 @@
+issue_id,description,acceptance_criteria
+PROF-301,"As a user, I want to update my profile information so that my account details are current","User can edit name and email; Changes are validated; Profile picture can be uploaded; Changes saved successfully; Confirmation message displayed"
+PROF-302,"As a user, I want to manage my notification preferences so that I receive relevant updates","User can access notification settings; Email preferences can be toggled; Push notification settings available; SMS preferences configurable; Settings saved and applied immediately"

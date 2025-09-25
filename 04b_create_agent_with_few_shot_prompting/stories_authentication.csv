@@ -1,0 +1,4 @@
+issue_id,description,acceptance_criteria
+AUTH-101,"As a user, I want to register a new account so that I can access the platform","User can enter email and password; System validates email format; Password meets complexity requirements; Confirmation email sent; Account created successfully"
+AUTH-102,"As a user, I want to reset my password when I forget it so that I can regain access","User can request password reset; Reset link sent to email; Link expires after 24 hours; New password meets requirements; User can login with new password"
+AUTH-103,"As a user, I want to enable two-factor authentication so that my account is more secure","User can access 2FA settings; QR code generated for authenticator app; User can enter verification code; 2FA enabled on successful verification; Backup codes provided"
